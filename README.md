@@ -1,3 +1,22 @@
+
+1. npm i -D prisma
+2. npx prisma init
+3.  modified prisma in prisma/schema.prisma
+4.  npx prisma db push
+
+Library most useful 
+- npm i  react-hook-form (validate form)
+- npm i  react-hot-toast (toast status)
+- npm i zustand (redux v2)
+- npm i prisma (type Schema orm)
+- npm i next-auth
+- npm i @prisma/client
+- npm i @next-auth/prisma-adapter
+- (optional ) npm i bcrypt / npm i @types/bcrypt
+- npm i query-string (use for search get param from query)
+- npm i Select
+- npm i next-cloudinary
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
