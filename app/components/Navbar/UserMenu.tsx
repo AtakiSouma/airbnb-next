@@ -5,16 +5,18 @@ import { useCallback, useReducer, useState } from "react";
 import MenuItem from "./MenuItem";
 import useRegisterModal from "@/app/Hooks/useRegisterModal";
 import useLoginModal from "@/app/Hooks/useLoginModal";
-import {SafeUser} from "../../types/index"
+import { SafeUser } from "../../types/index";
 import { User } from "@prisma/client";
 import { signOut } from "next-auth/react";
 import RentModal from "../modals/RentModal";
 import useRentModal from "@/app/Hooks/useRentModal";
+import { useRouter } from "next/navigation";
 interface UserMenuProps {
   currentUser?: SafeUser | null;
 }
 
 const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
+  const router = useRouter();
   const registerModal = useRegisterModal();
   const rentModal = useRentModal();
   const loginModal = useLoginModal();
@@ -23,11 +25,11 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
     setIsOpen((value) => !value);
   }, []);
   const onRent = useCallback(() => {
-     if(!currentUser){
+    if (!currentUser) {
       loginModal.onOpen();
-     }
-     rentModal.onOpen();
-  },[ loginModal , rentModal ,currentUser])
+    }
+    rentModal.onOpen();
+  }, [loginModal, rentModal, currentUser]);
 
   return (
     <div className="relative">
@@ -69,7 +71,7 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
           <AiOutlineMenu />
 
           <div className="hidden md:block">
-            <Avatar src={currentUser?.image}/>
+            <Avatar src={currentUser?.image} />
           </div>
         </div>
       </div>
@@ -92,12 +94,24 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
           <div className="flex flex-col cursor-pointer">
             {currentUser ? (
               <>
-                <MenuItem onClick={() => {}} label={"My Trips"} />
-                <MenuItem onClick={() => {}} label={"My Favorites"} />
-                <MenuItem onClick={() => {}} label={"My reservations"} />
-                <MenuItem onClick={() => {}} label={"My properties"} />
+                <MenuItem
+                  onClick={() => router.push("/trips")}
+                  label={"My Trips"}
+                />
+                <MenuItem
+                  onClick={() => router.push("/favorites")}
+                  label={"My Favorites"}
+                />
+                <MenuItem
+                  onClick={() => router.push("/reservations")}
+                  label={"My reservations"}
+                />
+                <MenuItem
+                  onClick={() => router.push("/properties")}
+                  label={"My properties"}
+                />
                 <MenuItem onClick={rentModal.onOpen} label={"Airbnb my Home"} />
-                <hr/>
+                <hr />
                 <MenuItem onClick={() => signOut()} label={"Logout"} />
               </>
             ) : (

@@ -1,0 +1,22 @@
+import prisma from "../../app/libs/prismadb";
+import getCurrentUser from "./getCurrentUser";
+
+export async function getFavoritesOfUser() {
+  try {
+    const currentUser = await getCurrentUser();
+    const favorites = await prisma.listing.findMany({
+      where: {
+        id: {
+          in: [...(currentUser?.favoriteIds || [])],
+        },
+      },
+    });
+    const safeFavorites = favorites.map((favorite) => ({
+        ...favorite,
+        createdAt: favorite.createdAt.toString(),
+    }))
+    return safeFavorites;
+  } catch (error: any) {
+    throw new Error(error);
+  }
+}

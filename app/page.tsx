@@ -2,12 +2,15 @@ import Image from "next/image";
 import ClientOnly from "./components/ClientOnly";
 import Container from "./components/Container";
 import EmptyState from "./components/EmptyState";
-import { getListings } from "./actions/getListings,";
+import { IListingsParams, getListings } from "./actions/getListings,";
 import getCurrentUser from "./actions/getCurrentUser";
 import ListingCard from "./components/listings/ListingCard";
+interface HomeProps {
+  searchParams: IListingsParams;
+};
+const Home = async ({searchParams} : HomeProps) => {
+  const listings = await getListings(searchParams);
 
-export default async function Home() {
-  const listings = await getListings();
   const currentUser = await getCurrentUser();
   if (listings.length === 0) {
     return (
@@ -35,7 +38,7 @@ export default async function Home() {
             "
         >
           {listings &&
-            listings.map((listing: any) => (
+            listings.map((listing) => (
               <ListingCard
                 currentUser={currentUser}
                 key={listing.id}
@@ -47,3 +50,4 @@ export default async function Home() {
     </ClientOnly>
   );
 }
+export default Home;
